@@ -8,11 +8,12 @@ import (
 var router = gin.Default()
 
 func StartServer() {
-	handleRequests()
+	handleUsersRequests()
 	router.Run()
 }
 
-func handleRequests() {
-	apiRouter := router.Group("/api")
-	apiRouter.GET("/alunos", usersControllers.FindAll)
+func handleUsersRequests() {
+	apiRouter := router.Group("/api/users")
+	apiRouter.GET("/", usersControllers.FindAll)
+	apiRouter.POST("/", usersControllers.Create)
 }
