@@ -24,3 +24,13 @@ func FindAll(c *gin.Context) {
 	users := usersService.FindAll()
 	c.JSON(http.StatusOK, users)
 }
+
+func FindById(c *gin.Context) {
+	id := c.Param("id")
+	user, err := usersService.FindById(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, models.NewResponseMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, user)
+}

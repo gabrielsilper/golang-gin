@@ -16,4 +16,5 @@ func handleUsersRequests() {
 	apiRouter := router.Group("/api/users")
 	apiRouter.GET("/", usersControllers.FindAll)
 	apiRouter.POST("/", usersControllers.Create)
+	apiRouter.GET("/:id", usersControllers.FindById)
 }
