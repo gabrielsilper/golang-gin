@@ -3,11 +3,11 @@ package usersControllers
 import (
 	"net/http"
 
+	"github.com/gabrielsilper/golang-gin/services/usersService"
 	"github.com/gin-gonic/gin"
 )
 
 func FindAll(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Ok",
-	})
+	users := usersService.FindAll()
+	c.JSON(http.StatusOK, users)
 }
