@@ -34,3 +34,30 @@ func FindById(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, user)
 }
+
+func Update(c *gin.Context) {
+	id := c.Param("id")
+	var updatedUser models.User
+	if err := c.ShouldBindJSON(&updatedUser); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	updatedUser, err := usersService.Update(id, updatedUser)
+	if err != nil {
+		c.JSON(http.StatusNotFound, models.NewResponseMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, updatedUser)
+}
+
+func Delete(c *gin.Context) {
+	id := c.Param("id")
+	err := usersService.Delete(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, models.NewResponseMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusNoContent, nil)
+}

@@ -13,8 +13,10 @@ func StartServer() {
 }
 
 func handleUsersRequests() {
-	apiRouter := router.Group("/api/users")
-	apiRouter.GET("/", usersControllers.FindAll)
-	apiRouter.POST("/", usersControllers.Create)
-	apiRouter.GET("/:id", usersControllers.FindById)
+	usersRouter := router.Group("/api/users")
+	usersRouter.GET("/", usersControllers.FindAll)
+	usersRouter.GET("/:id", usersControllers.FindById)
+	usersRouter.POST("/", usersControllers.Create)
+	usersRouter.PUT(":id", usersControllers.Update)
+	usersRouter.DELETE(":id", usersControllers.Delete)
 }

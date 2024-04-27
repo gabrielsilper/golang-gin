@@ -28,3 +28,21 @@ func FindById(id string) (models.User, error) {
 	}
 	return user, nil
 }
+
+func Delete(id string) error {
+	user, err := FindById(id)
+	if err != nil {
+		return err
+	}
+	database.DB.Delete(&user)
+	return nil
+}
+
+func Update(id string, updatedUser models.User) (models.User, error) {
+	user, err := FindById(id)
+	if err != nil {
+		return user, err
+	}
+	database.DB.Model(&user).UpdateColumns(updatedUser)
+	return user, nil
+}
