@@ -46,3 +46,10 @@ func Update(id string, updatedUser models.User) (models.User, error) {
 	database.DB.Model(&user).UpdateColumns(updatedUser)
 	return user, nil
 }
+
+func SearchByName(name string) []models.User {
+	var results []models.User
+	name = "%" + name + "%"
+	database.DB.Where("name ilike ?", name).Find(&results)
+	return results
+}

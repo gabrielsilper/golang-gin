@@ -61,3 +61,9 @@ func Delete(c *gin.Context) {
 	}
 	c.JSON(http.StatusNoContent, nil)
 }
+
+func SearchByName(c *gin.Context) {
+	name := c.Query("name")
+	users := usersService.SearchByName(name)
+	c.JSON(http.StatusOK, users)
+}
