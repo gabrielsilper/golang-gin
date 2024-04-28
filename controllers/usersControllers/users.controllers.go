@@ -11,9 +11,11 @@ import (
 func Create(c *gin.Context) {
 	var newUser models.User
 	if err := c.ShouldBindJSON(&newUser); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		c.JSON(http.StatusBadRequest, models.NewResponseMessage(err.Error()))
+		return
+	}
+	if err := models.ValidateUser(&newUser); err != nil {
+		c.JSON(http.StatusBadRequest, models.NewResponseMessage(err.Error()))
 		return
 	}
 	newUser = usersService.Create(newUser)
@@ -39,9 +41,11 @@ func Update(c *gin.Context) {
 	id := c.Param("id")
 	var updatedUser models.User
 	if err := c.ShouldBindJSON(&updatedUser); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		c.JSON(http.StatusBadRequest, models.NewResponseMessage(err.Error()))
+		return
+	}
+	if err := models.ValidateUser(&updatedUser); err != nil {
+		c.JSON(http.StatusBadRequest, models.NewResponseMessage(err.Error()))
 		return
 	}
 	updatedUser, err := usersService.Update(id, updatedUser)
